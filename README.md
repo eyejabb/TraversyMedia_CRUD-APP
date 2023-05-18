@@ -1,2 +1,1 @@
-# Traversy-CRUD-App
-# Traversy_
+# Traversy-CRUD-App Example
