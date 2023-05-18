@@ -1,10 +1,12 @@
 const path = require('path')
 const express = require('express')
+const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const exphbs = require('express-handlebars')
 const passport = require('passport')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const morgan = require('morgan')
 
 //Load config
@@ -29,7 +31,7 @@ app.engine('.hbs', exphbs.engine({
     extname: '.hbs', 
     partialsDir  : [
         //  path to your partials
-        path.join(__dirname, 'views/layouts/partials'),
+        path.join(__dirname, 'views/partials'),
     ]
     })
 )
@@ -40,6 +42,9 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI
+    })
 })
 )
 
@@ -54,6 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //Routes
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
+app.use('/stories', require('./routes/stories'))
 
 const PORT = process.env.PORT || 8500
 
