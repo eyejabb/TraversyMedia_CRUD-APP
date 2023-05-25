@@ -15,3 +15,7 @@ p {
     float: left;
     margin-right: 10 px;
 }
+
+.img-small {
+    width: 180px;
+}
